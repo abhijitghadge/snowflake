@@ -1,0 +1,9 @@
+definition_version: 2
+entities:
+  my_streamlit:
+    type: streamlit
+    identifier: sales_dashboard               # STREAMLIT object name
+    stage: streamlit_stage
+    query_warehouse: ANALYTICS_WH
+    main_file: streamlit_app.py
+    pages_dir: pages/
