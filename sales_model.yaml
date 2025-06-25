@@ -1,0 +1,39 @@
+name: sales_chat_model
+description: “Semantic model for conversational queries over SALES
+tables:
+  - name: sales
+    description: “All sales transactions”
+    base_table:
+      database: CORTEX
+      schema: CORTEX_STREAMLIT
+      table: SALES
+    primary_key:
+      columns: [ ORDER_ID ]
+    dimensions:
+      - name: ORDER_DATE
+        synonyms: ["day"]
+        expr: ORDER_DATE
+        data_type: date
+      - name: product
+        synonyms: ["item","sku"]
+        expr: product_name
+        data_type: varchar
+        cortex_search_service:
+          service: product_search_svc
+          literal_column: product_name
+          database: CORTEX
+          schema: CORTEX_STREAMLIT
+      - name: region
+        synonyms: ["territory","location"]
+        expr: region
+        data_type: varchar
+    facts:
+      - name: REVENUE
+        synonyms: ["sales","revenue"]
+        expr: REVENUE
+        data_type: number
+    metrics:
+      - name: total_sales
+        expr: SUM(REVENUE)
+        data_type: number
+relationships: []
